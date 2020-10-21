@@ -1,40 +1,41 @@
 #include<stdio.h>
 #include<windows.h>
 #include<time.h>
-#include<conio.h>
-void gotoxy(int x, int y)
-{
-	COORD c = { x, y };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
-}
-void draw_ship(int x, int y)
-{
-	gotoxy(x, y); printf(" <-0-> ");
-}
-void draw_bullet(int x, int y)
-{
-	gotoxy(x, y); printf("^");
-}
-void clear_bullet(int x, int y)
-{
-	gotoxy(x, y); printf(" ");
-}
+void gotoxy(int, int);
+void draw_star(int, int);
 int main()
 {
-	int i,j,k;
-	srand(time(NULL));
-	for (i = 0;i < 20;i++)
-	{
-		for (k = 0;k <= 5;k++) {
-			for (j = 0;j < 70;j++)
-			{
-				if ((k>=2&&k<=5)&&(j>=10&&j<=70)) printf("*", rand()); break;
-			}
-		printf("\n");
-		}
-		
-	}
-		
-	return 0;
+    int j, i, x[21], y[21], xa = 0, ya = 0, c = 0;
+    srand(time(NULL));
+    for (i = 1; i <= 20; i++)
+    {
+        c = 0;
+        xa = rand() % 61 + 10;
+        ya = rand() % 4 + 2;
+        for (j = 1; j <= i; j++)
+        {
+            if (x[j] == xa && y[j] == ya)
+                c++;
+        }
+        if (c == 0) {
+            x[i] = xa; y[i] = ya;
+            draw_star(xa, ya);
+        }
+        else
+        {
+            c = 0; i--;
+        }
+    }
+    Beep(700, 100);
+     gotoxy(0, 10);
+    return 0;
 }
-	
+void gotoxy(int x, int y)
+{
+    COORD c = { x, y };
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), c);
+}
+void draw_star(int x, int y) {
+    gotoxy(x, y);
+    printf("*");
+}
